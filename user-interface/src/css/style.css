@@ -11,6 +11,9 @@ body {
 .bg-green {
     background-color: #C5DC68;
 }
+.rounded-corner {
+    border-radius: 30px;
+}
 
 /* 
     NAVIGATION
@@ -31,6 +34,7 @@ body {
     margin-left: 1.75rem;
 }
 
-#taskbar-search input {
+.form-inline .form-control {
     width: 100%;
+    max-width: 600px;
 }
