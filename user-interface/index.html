@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./src/css/style.css">
     <!-- Website info -->
@@ -46,7 +47,7 @@
             </div>
 
             <div id="taskbar-user" class="col text-right order-md-last mb-2">
-                <span class="circle bg-green small p-2 mr-1">MB</span>
+                <span class="rounded-circle bg-green small p-2 mr-1">MB</span>
                 <span id="username" class="">Marty Bartoli</span>
             </div>
 
@@ -62,18 +63,150 @@
 
     <section class="container-fluid mb-5">
         <div class="row">
-            <main class="col-8 order-last">
+            <main class="col-12 col-md-8 col-lg-9 col-xl-10 order-last">
                 <section class="mb-5">
                     <h1>Vendors</h1>
+                    <!-- <select class="custom-select">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select> -->
                 </section>
 
-                <footer class="border-top pt-3">
-                    <p>Footer</p>
+                <footer class="container-fluid border-top text-muted small pt-3">
+                    <div class="row">
+                        <div class="col">
+                            <p>&copy; 2020 Manifest Beer Co.</p>
+                        </div>
+
+                        <div class="col text-center">
+                            <img class="" src="./src/img/transparentLogo-dark.png" width="50" height="50" alt="icon" aria-hidden="true">
+                        </div>
+
+                        <div class="col text-right">
+                            <p>Inventory Management System developed by Lorem Ipsum.</p>
+                        </div>
+                    </div>
                 </footer>
             </main>
 
-            <aside class="col order-first">
-                <h3>Sidebar goes here</h3>
+            <aside class="col order-first mb-5">
+                <nav id="main-nav">
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
+                                        <a class="nav-link text-uppercase" href="#">Dashboard</a>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-caret-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
+                                        <a class="nav-link active text-uppercase" href="#" data-toggle="collapse" data-target="#collapseInventory" aria-expanded="false" aria-controls="collapseInventory">Inventory</a>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-caret-right"></i>
+                                    </div>
+                                </div>
+                                <div id="collapseInventory" class="collapse hide" data-parent="#main-nav">
+                                    <nav class="nav flex-column">
+                                        <a class="nav-link ml-5 p-0" href="#">All products</a>
+                                        <a class="nav-link ml-5 p-0" href="#">Brew in-progress</a>
+                                        <a class="nav-link ml-5 p-0" href="#">Retail product</a>
+                                        <a class="nav-link ml-5 p-0" href="#">Trades &amp; Loss</a>
+                                    </nav>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
+                                        <a class="nav-link active text-uppercase" href="#" data-toggle="collapse" data-target="#collapseVendors" aria-expanded="true" aria-controls="collapseVendors">Vendors</a>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-caret-down"></i>
+                                    </div>
+                                </div>
+                                <div id="collapseVendors" class="collapse show" data-parent="#main-nav">
+                                    <nav class="nav flex-column">
+                                        <a class="nav-link active ml-5 p-0" href="#">Vendors</a>
+                                        <a class="nav-link ml-5 p-0" href="#">Catalogs</a>
+                                    </nav>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
+                                        <a class="nav-link active text-uppercase" href="#" data-toggle="collapse" data-target="#collapseOrders" aria-expanded="false" aria-controls="collapseOrders">Orders</a>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-caret-right"></i>
+                                    </div>
+                                </div>
+                                <div id="collapseOrders" class="collapse hide" data-parent="#main-nav">
+                                    <nav class="nav flex-column">
+                                        <a class="nav-link ml-5 p-0" href="#">Order history</a>
+                                        <a class="nav-link ml-5 p-0" href="#">Drafts</a>
+                                    </nav>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
+                                        <a class="nav-link text-uppercase" href="#">Brewing</a>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-caret-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
+                                        <a class="nav-link text-uppercase" href="#">Reports</a>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-caret-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
+                                        <a class="nav-link text-uppercase" href="#">Settings</a>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-caret-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
             </aside>
         </div>
     </section> 

@@ -12,13 +12,23 @@ body {
     background-color: #C5DC68;
 }
 
-.circle {
-    border-radius: 50%;
-}
-
+/* 
+    NAVIGATION
+*/
 #site-nav a {
     text-transform: uppercase;
     font-weight: 500;
+}
+#main-nav .nav-link {
+    display: inline-block;  /* allows for icons */
+}
+#main-nav a,
+#main-nav .collapse a.active {
+    color: #2c2c2c;
+}
+#main-nav .collapse a {
+    color: #666;
+    margin-left: 1.75rem;
 }
 
 #taskbar-search input {
