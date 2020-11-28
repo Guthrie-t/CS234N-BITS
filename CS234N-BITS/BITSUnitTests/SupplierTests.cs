@@ -8,7 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BITSUnitTests
 {
-    public class Tests
+    [TestFixture]
+    public class SupplierTests
     {
         bitsContext dbContext;
         Supplier s;
@@ -24,7 +25,8 @@ namespace BITSUnitTests
         public void Setup()
         {
             dbContext = new bitsContext();
-            dbContext.Database.ExecuteSqlRaw("call usp_testingResetbitsData()");
+            //if you haven't added my usp to your database, comment this out
+            dbContext.Database.ExecuteSqlRaw("call usp_testingResetbitsData()"); 
         }
 
         [Test]
@@ -56,43 +58,44 @@ namespace BITSUnitTests
         [Test]
         public void TestJoinSuppliertoSupplierAddress()
         {
+            var supplierCodes = dbContext.Supplier.Join( //select * from Supplier
+                dbContext.SupplierAddress, //join SupplierAddress on Supplier.SupplierId = SupplierAddress.SupplierId
+                s => s.SupplierId,
+                sa => sa.SupplierId,
+                //and then return these fields below from those tables where the SupplierId is equal to 4
+                (s, sa) => new { s.SupplierId, s.Name, sa.AddressId, sa.AddressTypeId }).Where(s => s.SupplierId == 4).ToList();
+            Assert.AreEqual(2, supplierCodes.Count);
+            Console.WriteLine(supplierCodes[0]);
+        }
+
+        [Test]
+        public void TestGetAddressFromSupplierId()
+        {
+            //This first variable joins the Supplier and SupplierAddress table to return a Billing Address Id for the specified 
+            //Supplier. You can alter what type of address is returned by altering the AddressTypeId
             var supplierCodes = dbContext.Supplier.Join(
                 dbContext.SupplierAddress,
                 s => s.SupplierId,
                 sa => sa.SupplierId,
-                (s, sa) => new { s.SupplierId, s.Name, sa.AddressId, sa.AddressTypeId }).Where(s => s.SupplierId == 4).ToList();
-            Assert.AreEqual(2, supplierCodes.Count);
+                (s, sa) => new { s.SupplierId, s.Name, sa.AddressId, sa.AddressTypeId })
+                    .Where(s => s.SupplierId == 4 && s.AddressTypeId ==1 ).ToList();
+            var addressId =  supplierCodes[0].AddressId;
+
+            //Two joins in one statement is apparently very difficult with anonymous object types. Easier to do two and just
+            //store the info we need in a variable.
+
+            //addressId is used as a parameter here in the second join to return ONLY the requested address for the supplier above. 
+            var billAddress = dbContext.SupplierAddress.Join(
+                dbContext.Address,
+                a => a.AddressId,
+                sa => sa.AddressId,
+                (sa, a) => new {sa.AddressId, a.StreetLine1, a.StreetLine2, a.City, a.State, a.Zipcode, a.Country })
+                .Where(sa => sa.AddressId == addressId).ToList();
+
+            var addressCity = billAddress[0].City; //when using ToList() you have to indicate what piece of the list to look at thus [0]
+
+            Assert.AreEqual("New York", addressCity); //could also have been billAddress[0].City
         }
-
-        [Test]
-        public void GetAddressFromSupplierId()
-        {
-
-
-            var address =
-             (from s in dbContext.Supplier
-             join sa in dbContext.SupplierAddress
-                 on s.SupplierId equals sa.SupplierId
-             join a in dbContext.Address
-                 on a.AddressId equals sa.AddressId
-             where s.SupplierId == 4
-             where sa.AddressTypeId == 1
-              select new
-             {
-                 s.SupplierId,
-                 s.Name,
-                 a.StreetLine1,
-                 a.StreetLine2,
-                 a.City,
-                 a.State,
-                 a.Zipcode,
-                 a.Country
-             });
-
-            Assert.IsNotNull(address);
-            //I can't figure out how to look at the data in this to be sure it's real. --TG
-
-        }   
 
         public void PrintAll(List<Supplier> suppliers)
         {
