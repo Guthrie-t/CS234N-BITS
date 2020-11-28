@@ -65,7 +65,7 @@
         <div class="row">
             <main class="col-12 col-md-8 col-lg-9 col-xl-10 order-last">
                 <header class="container-fluid mb-5">
-                    <div class="row">
+                    <div class="row align-items-center mb-3">
                         <div class="col">
                             <h1>Vendors</h1>
                         </div>
@@ -74,14 +74,13 @@
                             <div class="row my-3">
                                 <div class="col px-1 my-1">
                                     <select class="custom-select  text-muted rounded-corner">
-                                        <option selected>Filter: Current Vendors</option>
-                                        <option value="1">Archived Vendors</option>
-                                        <option value="2">0-9</option>
-                                        <option value="3">A-E</option>
-                                        <option value="4">F-J</option>
-                                        <option value="5">K-O</option>
-                                        <option value="6">P-T</option>
-                                        <option value="7">U-Z</option>
+                                        <option selected>Category: All vendors</option>
+                                        <option value="1">0-9</option>
+                                        <option value="2">A-E</option>
+                                        <option value="3">F-J</option>
+                                        <option value="4">K-O</option>
+                                        <option value="5">P-T</option>
+                                        <option value="6">U-Z</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-4 px-1 my-1">
@@ -101,9 +100,91 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row align-items-center">
+                        <div class="col-3 col-lg-2">
+                            <div class="dropdown show">
+                                <a class="dropdown-toggle text-uppercase" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Current
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                  <a class="dropdown-item" href="#">Archived</a>
+                                </div>
+                              </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="btn-group" role="group" aria-label="Bulk control group">
+                                <button type="button" class="btn btn-outline-dark py-2">Bulk edit</button>
+                                <button type="button" class="btn btn-outline-dark py-2">Delete</button>
+                                <button type="button" class="btn btn-outline-dark py-2">Archive</button>
+                            </div>
+                        </div>
+
+                        <div class="col text-right">
+                            <button type="button" class="btn btn-dark text-uppercase px-lg-4 py-2">Add vendor</button>
+                        </div>
+                    </div>
                 </header>
+            
+                <section class="container-fluid border rounded-corner mb-5">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Vendor</th>
+                                <th scope="col">Primary Contact</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Country</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>Amet Ipsum Dolor</td>
+                                <td>Consectetur Adipiscing</td>
+                                <td>1 (555) 555-1234</td>
+                                <td>adminimveniam@quisnostrud.nul</td>
+                                <td>Ullamco</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>Amet Ipsum Dolor</td>
+                                <td>Consectetur Adipiscing</td>
+                                <td>1 (555) 555-1234</td>
+                                <td>adminimveniam@quisnostrud.nul</td>
+                                <td>Ullamco</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">3</th>
+                                <td>Amet Ipsum Dolor</td>
+                                <td>Consectetur Adipiscing</td>
+                                <td>1 (555) 555-1234</td>
+                                <td>adminimveniam@quisnostrud.nul</td>
+                                <td>Ullamco</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                </section>
 
+                <section class="container-fluid mb-5">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="btn-group" role="group" aria-label="Bulk control group">
+                                <button type="button" class="btn btn-outline-dark py-2">Bulk edit</button>
+                                <button type="button" class="btn btn-outline-dark py-2">Delete</button>
+                                <button type="button" class="btn btn-outline-dark py-2">Archive</button>
+                            </div>
+                        </div>
 
+                        <div class="col text-right">
+                            <button type="button" class="btn btn-dark text-uppercase px-lg-4 py-2">Add vendor</button>
+                        </div>
+                    </div>
+                </section>
 
                 <footer class="container-fluid border-top text-muted small pt-3">
                     <div class="row">

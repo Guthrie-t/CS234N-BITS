@@ -12,7 +12,7 @@ body {
     background-color: #C5DC68;
 }
 .rounded-corner {
-    border-radius: 30px;
+    border-radius: 20px;
 }
 
 /* 
@@ -21,10 +21,12 @@ body {
 #site-nav a {
     text-transform: uppercase;
     font-weight: 500;
+    color: #FFFBEE;
 }
 #main-nav .nav-link {
     display: inline-block;  /* allows for icons */
 }
+a, a:hover, a:active
 #main-nav a,
 #main-nav .collapse a.active {
     color: #2c2c2c;
@@ -34,7 +36,20 @@ body {
     margin-left: 1.75rem;
 }
 
+/* 
+    HEADINGS
+*/
+h1, .h1 {
+    font-weight: 300;
+}
+
+/* 
+    FORM + SELECTION ELEMENTS
+*/
 .form-inline .form-control {
     width: 100%;
     max-width: 600px;
+}
+.dropdown {
+    font-size: 1.25rem;
 }
