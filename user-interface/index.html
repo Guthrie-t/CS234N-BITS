@@ -100,7 +100,7 @@
             
                 <section id="main" class="container-fluid border rounded-corner mb-5">
                     <div class="table-responsive">
-                        <table class="table table-hover mb-0">
+                        <table class="table mb-0">
                             <thead class="text-muted">
                                 <tr>
                                     <th scope="col">
@@ -112,8 +112,9 @@
                                     <th scope="col">Vendor</th>
                                     <th scope="col">Primary Contact</th>
                                     <th scope="col">Phone</th>
+                                    <th scope="col">Office</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Country</th>
+                                    <th scope="col">Website</th>
                                     <th scope="col">&nbsp;</th>
                                 </tr>
                             </thead>
@@ -125,43 +126,67 @@
                                         </div>
                                     </th>
                                     <td>1</td>
-                                    <td>Amet Ipsum Dolor</td>
+                                    <td>Ipsum Dolor</td>
                                     <td>Consectetur Adipiscing</td>
                                     <td>1 (555) 555-1234</td>
+                                    <td>1 (555) 555-1234</td>
                                     <td>adminimveniam@quisnostrud.nul</td>
-                                    <td>Ullamco</td>
+                                    <td><a href="#">www.quisnostrud.nul</a></td>
                                     <td>
-                                        <a class="" href="#details1" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="details1">
-                                            <i class="fa fa-caret-right"></i>
+                                        <a class="" href="#details1" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="details1">
+                                            <i class="fa fa-caret-down"></i>
                                         </a>
                                     </td>
                                 </tr>
-                                <tr class="collapse show" id="details1">
-                                    <th class="border-0">&nbsp;</th>
-                                    <td colspan="7" class="border-0 p-0">
-                                        <table class="table mb-0">
-                                            <tbody>
-                                              <tr>
-                                                <th scope="row">1234 Culpa Officia</th>
-                                                <td>Deserunt Mollit Anim</td>
-                                                <td>Voluptae Dolore</td>
-                                                <td>98765-1234</td>
-                                              </tr>
-                                            </tbody>
-                                        </table>
-                                        <!-- <div class="row">
-                                            <div class="col">
-
+                                <tr class="table-nested collapse" id="details1">
+                                    <th>&nbsp;</th>
+                                    <td colspan="8" class="">
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <table class="table table-sm mb-0">
+                                                    <tbody>
+                                                        <tr class="address">
+                                                            <th scope="row">1234 Culpa Officia</th>
+                                                            <td>Deserunt Mollit Anim</td>
+                                                            <td>Voluptae Dolore</td>
+                                                            <td>98765-1234</td>
+                                                            <td>US</td>
+                                                        </tr>
+                                                        <tr class="address-label text-muted small">
+                                                            <th scope="row">Shipping address</th>
+                                                            <td>City</td>
+                                                            <td>State / Province</td>
+                                                            <td>Zip-code</td>
+                                                            <td>Country</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
-
-                                            <div class="col">
-
+                                        </div>
+                                        <div class="row">    
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>Notes:</label>
+                                                    <textarea class="form-control notes">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+                                                </div>
                                             </div>
-
-                                            <div class="col">
-
+                                        </div>
+                                        <div class="row">    
+                                            <div class="col text-muted">
+                                                <nav class="nav">
+                                                    <a class="nav-link h5" href="#">Order history</a>
+                                                    <a class="nav-link h5" href="#">Ingredients</a>
+                                                </nav>
                                             </div>
-                                        </div> -->
+                                            <div class="col">
+                                                <nav class="nav justify-content-end">
+                                                    <a class="nav-link" href="#">Edit</a>
+                                                    <a class="nav-link" href="#">Save</a>
+                                                    <a class="nav-link" href="#">Archive</a>
+                                                    <a class="nav-link" href="#">Delete</a>
+                                                </nav>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -174,8 +199,79 @@
                                     <td>Amet Ipsum Dolor</td>
                                     <td>Consectetur Adipiscing</td>
                                     <td>1 (555) 555-1234</td>
+                                    <td>1 (555) 555-1234</td>
                                     <td>adminimveniam@quisnostrud.nul</td>
-                                    <td>Ullamco</td>
+                                    <td><a href="#">www.quisnostrud.nul</a></td>
+                                    <td>
+                                        <a class="" href="#details2" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="details2">
+                                            <i class="fa fa-caret-down"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr class="table-nested collapse" id="details2">
+                                    <th>&nbsp;</th>
+                                    <td colspan="8" class="">
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <table class="table table-sm mb-0">
+                                                    <tbody>
+                                                        <tr class="address">
+                                                            <th scope="row">1234 Culpa Officia</th>
+                                                            <td>Deserunt Mollit Anim</td>
+                                                            <td>Voluptae Dolore</td>
+                                                            <td>98765-1234</td>
+                                                            <td>US</td>
+                                                        </tr>
+                                                        <tr class="address-label text-muted small">
+                                                            <th scope="row">Billing address</th>
+                                                            <td>City</td>
+                                                            <td>State / Province</td>
+                                                            <td>Zip-code</td>
+                                                            <td>Country</td>
+                                                        </tr>
+                                                        <tr class="address">
+                                                            <th scope="row">1234 Culpa Officia</th>
+                                                            <td>Deserunt Mollit Anim</td>
+                                                            <td>Voluptae Dolore</td>
+                                                            <td>98765-1234</td>
+                                                            <td>US</td>
+                                                        </tr>
+                                                        <tr class="address-label text-muted small">
+                                                            <th scope="row">Shipping address</th>
+                                                            <td>City</td>
+                                                            <td>State / Province</td>
+                                                            <td>Zip-code</td>
+                                                            <td>Country</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">    
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>Notes:</label>
+                                                    <textarea class="form-control notes">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">    
+                                            <div class="col text-muted">
+                                                <nav class="nav">
+                                                    <a class="nav-link h5" href="#">Order history</a>
+                                                    <a class="nav-link h5" href="#">Ingredients</a>
+                                                </nav>
+                                            </div>
+                                            <div class="col">
+                                                <nav class="nav justify-content-end">
+                                                    <a class="nav-link" href="#">Edit</a>
+                                                    <a class="nav-link" href="#">Save</a>
+                                                    <a class="nav-link" href="#">Archive</a>
+                                                    <a class="nav-link" href="#">Delete</a>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
@@ -187,9 +283,65 @@
                                     <td>Amet Ipsum Dolor</td>
                                     <td>Consectetur Adipiscing</td>
                                     <td>1 (555) 555-1234</td>
+                                    <td>1 (555) 555-1234</td>
                                     <td>adminimveniam@quisnostrud.nul</td>
-                                    <td>Ullamco</td>
+                                    <td><a href="#">www.quisnostrud.nul</a></td>
+                                    <td>
+                                        <a class="" href="#details3" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="details3">
+                                            <i class="fa fa-caret-down"></i>
+                                        </a>
+                                    </td>
                                 </tr>
+                                <tr class="table-nested collapse" id="details3">
+                                    <th>&nbsp;</th>
+                                    <td colspan="8" class="">
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <table class="table table-sm mb-0">
+                                                    <tbody>
+                                                        <tr class="address">
+                                                            <th scope="row">1234 Culpa Officia</th>
+                                                            <td>Deserunt Mollit Anim</td>
+                                                            <td>Voluptae Dolore</td>
+                                                            <td>98765-1234</td>
+                                                            <td>US</td>
+                                                        </tr>
+                                                        <tr class="address-label text-muted small">
+                                                            <th scope="row">Shipping address</th>
+                                                            <td>City</td>
+                                                            <td>State / Province</td>
+                                                            <td>Zip-code</td>
+                                                            <td>Country</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">    
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>Notes:</label>
+                                                    <textarea class="form-control notes">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">    
+                                            <div class="col text-muted">
+                                                <nav class="nav">
+                                                    <a class="nav-link h5" href="#">Order history</a>
+                                                    <a class="nav-link h5" href="#">Ingredients</a>
+                                                </nav>
+                                            </div>
+                                            <div class="col">
+                                                <nav class="nav justify-content-end">
+                                                    <a class="nav-link" href="#">Edit</a>
+                                                    <a class="nav-link" href="#">Save</a>
+                                                    <a class="nav-link" href="#">Archive</a>
+                                                    <a class="nav-link" href="#">Delete</a>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </td>
                             </tbody>
                         </table>
                     </div>
@@ -199,31 +351,24 @@
             <aside class="col order-first mb-5">
                 <nav id="main-nav">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
+                        <li class="nav-item mb-3">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
-                                        <a class="nav-link text-uppercase" href="#">Dashboard</a>
-                                    </div>
-                                    <div class="col-2">
-                                        <i class="fa fa-caret-right"></i>
-                                    </div>
-                                </div>
+                                <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
+                                <a class="nav-link text-uppercase" href="#">Dashboard</a>
                             </div>
                         </li>
                         <li class="nav-item mb-3">
                             <div class="container">
-                                <div class="row">
+                                <div class="row align-items-center">
                                     <div class="col">
                                         <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
                                         <a class="nav-link active text-uppercase" href="#" data-toggle="collapse" data-target="#collapseInventory" aria-expanded="false" aria-controls="collapseInventory">Inventory</a>
                                     </div>
                                     <div class="col-2">
-                                        <i class="fa fa-caret-right"></i>
+                                        <i class="fa fa-caret-down"></i>
                                     </div>
                                 </div>
-                                <div id="collapseInventory" class="collapse hide" data-parent="#main-nav">
+                                <div id="collapseInventory" class="collapse" data-parent="#main-nav">
                                     <nav class="nav flex-column">
                                         <a class="nav-link ml-5 p-0" href="#">All products</a>
                                         <a class="nav-link ml-5 p-0" href="#">Brew in-progress</a>
@@ -235,35 +380,22 @@
                         </li>
                         <li class="nav-item mb-3">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
-                                        <a class="nav-link active text-uppercase" href="#" data-toggle="collapse" data-target="#collapseVendors" aria-expanded="true" aria-controls="collapseVendors">Vendors</a>
-                                    </div>
-                                    <div class="col-2">
-                                        <i class="fa fa-caret-down"></i>
-                                    </div>
-                                </div>
-                                <div id="collapseVendors" class="collapse show" data-parent="#main-nav">
-                                    <nav class="nav flex-column">
-                                        <a class="nav-link active ml-5 p-0" href="#">Vendors</a>
-                                        <a class="nav-link ml-5 p-0" href="#">Catalogs</a>
-                                    </nav>
-                                </div>
+                                <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
+                                <a class="nav-link active text-uppercase" href="#">Vendors</a>
                             </div>
                         </li>
                         <li class="nav-item mb-3">
                             <div class="container">
-                                <div class="row">
+                                <div class="row align-items-center">
                                     <div class="col">
                                         <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
                                         <a class="nav-link active text-uppercase" href="#" data-toggle="collapse" data-target="#collapseOrders" aria-expanded="false" aria-controls="collapseOrders">Orders</a>
                                     </div>
                                     <div class="col-2">
-                                        <i class="fa fa-caret-right"></i>
+                                        <i class="fa fa-caret-down"></i>
                                     </div>
                                 </div>
-                                <div id="collapseOrders" class="collapse hide" data-parent="#main-nav">
+                                <div id="collapseOrders" class="collapse" data-parent="#main-nav">
                                     <nav class="nav flex-column">
                                         <a class="nav-link ml-5 p-0" href="#">Order history</a>
                                         <a class="nav-link ml-5 p-0" href="#">Drafts</a>
@@ -273,41 +405,20 @@
                         </li>
                         <li class="nav-item mb-3">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
-                                        <a class="nav-link text-uppercase" href="#">Brewing</a>
-                                    </div>
-                                    <div class="col-2">
-                                        <i class="fa fa-caret-right"></i>
-                                    </div>
-                                </div>
+                                <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
+                                <a class="nav-link text-uppercase" href="#">Brewing</a>
                             </div>
                         </li>
                         <li class="nav-item mb-3">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
-                                        <a class="nav-link text-uppercase" href="#">Reports</a>
-                                    </div>
-                                    <div class="col-2">
-                                        <i class="fa fa-caret-right"></i>
-                                    </div>
-                                </div>
+                                <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
+                                <a class="nav-link text-uppercase" href="#">Reports</a>
                             </div>
                         </li>
                         <li class="nav-item mb-3">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
-                                        <a class="nav-link text-uppercase" href="#">Settings</a>
-                                    </div>
-                                    <div class="col-2">
-                                        <i class="fa fa-caret-right"></i>
-                                    </div>
-                                </div>
+                                <img class="" src="./src/img/transparentLogo-dark.png" width="24" height="24" alt="icon" aria-hidden="true">
+                                <a class="nav-link text-uppercase" href="#">Settings</a>
                             </div>
                         </li>
                     </ul>
