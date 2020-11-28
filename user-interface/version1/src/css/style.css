@@ -1,0 +1,70 @@
+body {
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.bg-darkgray {
+    background-color: #2c2c2c;
+}
+.bg-blue {
+    background-color: #C3E2ED;
+}
+.bg-green {
+    background-color: #C5DC68;
+}
+.rounded-corner {
+    border-radius: 20px;
+}
+
+/* 
+    NAVIGATION
+*/
+#site-nav a {
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #FFFBEE;
+}
+#main-nav .nav-link {
+    display: inline-block;  /* allows for icons */
+}
+a, a:hover, a:active
+#main-nav a,
+#main-nav .collapse a.active {
+    color: #2c2c2c;
+}
+#main-nav .collapse a {
+    color: #666;
+    margin-left: 1.75rem;
+}
+
+/* 
+    HEADINGS
+*/
+h1, .h1 {
+    font-weight: 300;
+}
+th {
+    font-weight: 400;
+}
+
+/* 
+    FORM + SELECTION ELEMENTS
+*/
+.form-inline .form-control {
+    width: 100%;
+    max-width: 600px;
+}
+.dropdown {
+    font-size: 1.25rem;
+
+}
+.form-check-input {
+    width: 1.15rem;
+    height: 1.15rem;
+}
+
+
+#main {
+    box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
