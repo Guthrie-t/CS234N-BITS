@@ -19,5 +19,10 @@ namespace bitsEFClasses.Models
         public string Country { get; set; }
 
         public virtual ICollection<SupplierAddress> SupplierAddress { get; set; }
+
+        public override string ToString()
+        {
+            return AddressId + " \n" + StreetLine1 + " " + StreetLine2 + " \n" + City + ", " + State + "  " + Zipcode + ", " + Country;
+        }
     }
 }
