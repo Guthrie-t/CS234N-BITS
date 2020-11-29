@@ -78,7 +78,7 @@ namespace BITSUnitTests
                 s => s.SupplierId,
                 sa => sa.SupplierId,
                 (s, sa) => new { s.SupplierId, s.Name, sa.AddressId, sa.AddressTypeId })
-                    .Where(s => s.SupplierId == 4 && s.AddressTypeId ==1 ).ToList();
+                    .Where(s => s.SupplierId == 4 && s.AddressTypeId == 1 ).ToList();
             var addressId =  supplierCodes[0].AddressId;
 
             //Two joins in one statement is apparently very difficult with anonymous object types. Easier to do two and just
