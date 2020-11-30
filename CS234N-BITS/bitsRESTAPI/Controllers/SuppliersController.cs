@@ -41,6 +41,20 @@ namespace bitsRESTAPI.Controllers
             return supplier;
         }
 
+        // GET: api/Suppliers/Search/Name
+        [HttpGet("search/{name}")]
+        public async Task<ActionResult<Supplier>> GetSupplierByName(string name)
+        {
+            var supplier = await _context.Supplier.Where(s => s.Name.Contains(name)).FirstAsync();
+
+            if (supplier == null)
+            {
+                return NotFound();
+            }
+
+            return supplier;
+        }
+
         // PUT: api/Suppliers/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

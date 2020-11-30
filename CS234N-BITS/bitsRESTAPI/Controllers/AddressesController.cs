@@ -41,6 +41,20 @@ namespace bitsRESTAPI.Controllers
             return address;
         }
 
+        //// GET: api/Addresses/Search/5
+        //[HttpGet("search/{id}")]
+        //public async Task<ActionResult<Address>> GetAddressBySupplierId(int id)
+        //{
+        //    var address = await _context.Address.Include
+        //    if (address == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return address;
+        //}
+
+
         // PUT: api/Addresses/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
