@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using bitsEFClasses.Models;
+using SimpleSupplier = bitsEFClasses.AdditionalModels.Supplier;
 
 namespace bitsRESTAPI.Controllers
 {
@@ -39,6 +40,25 @@ namespace bitsRESTAPI.Controllers
             }
 
             return supplier;
+        }
+
+        // GET: Aapi/Suppliers/search/supplier/1
+        [HttpGet("search/supplier/{id}")]
+        public async Task<ActionResult<SimpleSupplier>> GetSupplierAddresses(int id)
+        {
+            SimpleSupplier simpleSupplier = new SimpleSupplier();
+
+            //var supplier = await _context.Supplier.FindAsync(id);
+
+            simpleSupplier.FillSupplier(_context, id);
+
+
+            if (simpleSupplier == null)
+            {
+                return NotFound();
+            }
+
+            return simpleSupplier;
         }
 
         // GET: api/Suppliers/Search/Name
