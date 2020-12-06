@@ -44,7 +44,7 @@
                         <div class="col-12 col-md-8">
                             <div class="row my-3">
                                 <div class="col px-1 my-1">
-                                    <select class="custom-select  text-muted rounded-corner">
+                                    <select id="selectAlphaList" class="custom-select  text-muted rounded-corner">
                                         <option selected>Alphabetical: All vendors</option>
                                         <option value="1">0-9</option>
                                         <option value="2">A-E</option>
@@ -55,7 +55,7 @@
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-4 px-1 my-1">
-                                    <select class="custom-select  text-muted rounded-corner">
+                                    <select id="selectIngredientList" class="custom-select  text-muted rounded-corner">
                                         <option selected>Ingredient: All ingredients</option>
                                         <option value="1">Hops</option>
                                         <option value="2">Grain</option>
@@ -63,8 +63,8 @@
                                     </select>
                                 </div>
                                 <div class="col px-1 my-1">
-                                    <form class="form-inline">
-                                        <input class="form-control rounded-corner mx-auto" type="search" placeholder="Quick search">
+                                    <form id="searchForm" class="form-inline">
+                                        <input id="searchInput" class="form-control rounded-corner mx-auto" type="search" placeholder="Quick search">
                                         <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
                                     </form>
                                 </div>
@@ -73,8 +73,8 @@
                     </div>
 
                     <div class="row align-items-center">
-                        <div class="col-3 col-lg-2">
-                            <div class="dropdown show">
+                        <div class="col-3 col-lg-2 col-xl-2">
+                            <div id="selectView" class="dropdown show">
                                 <a class="dropdown-toggle text-uppercase" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   Current
                                 </a>
@@ -84,28 +84,32 @@
                               </div>
                         </div>
 
-                        <div class="col">
-                            <div class="btn-group" role="group" aria-label="Bulk control group">
-                                <button type="button" class="btn btn-outline-dark py-2">Bulk edit</button>
-                                <button type="button" class="btn btn-outline-dark py-2">Delete</button>
-                                <button type="button" class="btn btn-outline-dark py-2">Archive</button>
+                        <div class="col order-last order-sm-2 mt-5 mt-sm-0">
+                            <div id="bulkControlSet" class="btn-group" role="group" aria-label="Bulk control group">
+                                <button id="bulkEdit" type="button" class="btn btn-outline-dark py-2">Bulk edit</button>
+                                <button id="bulkDelete" type="button" class="btn btn-outline-dark py-2">Delete</button>
+                                <button id="bulkArchive" type="button" class="btn btn-outline-dark py-2">Archive</button>
                             </div>
                         </div>
 
-                        <div class="col text-right">
-                            <button type="button" class="btn btn-dark text-uppercase px-lg-4 py-2">Add vendor</button>
+                        <div class="col order-sm-last text-right">
+                            <button id="addSupplier" type="button" class="btn btn-dark text-uppercase px-lg-4 py-2">Add vendor</button>
                         </div>
                     </div>
                 </header>
             
-                <section id="main" class="container-fluid border rounded-corner mb-5">
-                    <div class="table-responsive">
+                <div id="loadingIndicator" class="text-center mb-5">
+                    <img src="./src/img/loading.gif" class="" width="50" /> 
+                </div>
+
+                <section id="mainContent" class="container-fluid border rounded-corner mb-5">
+                    <!-- <div id="supplierTable" class="table-responsive">
                         <table class="table mb-0">
                             <thead class="text-muted">
                                 <tr>
                                     <th scope="col">
                                         <div class="form-check">
-                                            <input class="form-check-input position-static" type="checkbox" id="defaultCheck" value="" aria-label="Select all vendor records">
+                                            <input id="selectAllCheckbox" class="form-check-input position-static" type="checkbox" value="" aria-label="Select all vendor records">
                                         </div>
                                     </th>
                                     <th scope="col">#</th>
@@ -119,10 +123,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr class="summary" data-id="">
                                     <th scope="row">
                                         <div class="form-check">
-                                            <input class="form-check-input position-static" type="checkbox" id="" value="option1" aria-label="Select vendor">
+                                            <input class="form-check-input position-static selectSupplier" type="checkbox" value="option1" aria-label="Select vendor">
                                         </div>
                                     </th>
                                     <td>1</td>
@@ -344,7 +348,7 @@
                                     </td>
                             </tbody>
                         </table>
-                    </div>
+                    </div> -->
                 </section>
             </section>
 
@@ -449,5 +453,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./src/js/supplier.js"></script>
 </body>
 </html>
