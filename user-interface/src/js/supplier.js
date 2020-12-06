@@ -10,11 +10,9 @@
 class SupplierPage {
     constructor() {
         this.state = {
-            suppliers: [], // array of all supplier objects
-            addresses: [], // array of all supplier address objects
-            selectSupplier: { // grab the chosen supplier by Id and all associated data; is this useful or an unnecessary step?
-                supplierId: 6,
-                supplier: {
+            suppliers: [  // array of all supplier objects
+                {
+                    supplierId: 6,
                     name: "White Labs",
                     phone: "n",
                     email: "info@whitelabs.com",
@@ -23,35 +21,39 @@ class SupplierPage {
                     repLast: "Derr",
                     repPhone: "858.267.7691",
                     repEmail: "kderr@whitelabs.com ",
-                    note: ""
-                },
-                addresses: [
-                    {
-                        addressId: 7,                // FL: When we fetch the data, if we change this value to
-                        addressType: "Billing", // 1 //     the english address type, we can use it in the string
-                        address: {                   //     literal on the DOM for underneath the Address line
-                            streetLine1: ": 9495 Candida Street",
-                            streetLine2: "",
-                            city: "San Diego",
-                            state: "CA",
-                            zipcode: "92126",
-                            country: "USA"
-                        }
-                    },
-                    {
-                        addressId: 7,
-                        addressType: "Mailing", // 2
-                        address: {
-                            streetLine1: ": 9495 Candida Street",
-                            streetLine2: "",
-                            city: "San Diego",
-                            state: "CA",
-                            zipcode: "92126",
-                            country: "USA"
-                        }
+                    note: "",
+                    addressId: [
+                        7,
+                        7
+                    ]
+                }
+            ],
+            addresses: [  // array of all supplier address objects
+                {
+                    addressId: 7,                // FL: When we fetch the data, if we change this value to
+                    addressType: "Billing", // 1 //     the english address type, we can use it in the string
+                    address: {                   //     literal on the DOM for underneath the Address line
+                        streetLine1: ": 9495 Candida Street",
+                        streetLine2: "",
+                        city: "San Diego",
+                        state: "CA",
+                        zipcode: "92126",
+                        country: "USA"
                     }
-                ]
-            }
+                },
+                {
+                    addressId: 7,
+                    addressType: "Mailing", // 2
+                    address: {
+                        streetLine1: ": 9495 Candida Street",
+                        streetLine2: "",
+                        city: "San Diego",
+                        state: "CA",
+                        zipcode: "92126",
+                        country: "USA"
+                    }
+                }
+            ], 
         }
         // api urls
         this.server = "https://localhost:58543/api/";
@@ -68,6 +70,7 @@ class SupplierPage {
         this.addSupplierBtn = document.querySelector('#addSupplier');
         this.loadingIndicator = document.querySelector('#loadingIndicator');
         this.mainContent = document.querySelector('#mainContent');
+        this.supplierTable = document.querySelector('#supplierTable');
         //start application
         console.log("loaded");
         this.bindAllMethods.bind(this);
@@ -82,6 +85,7 @@ class SupplierPage {
         this.renderTable = this.renderTable.bind(this);
         this.renderRecordSummary = this.renderRecordSummary.bind(this);
         this.renderRecordDetails = this.renderRecordDetails.bind(this);
+        this.renderAddress = this.renderAddress.bind(this);
         this.fetchAllSuppliers = this.fetchAllSuppliers.bind(this);
         this.fetchSupplier = this.fetchSupplier.bind(this);
         this.enableFields = this.enableFields.bind(this);
@@ -95,7 +99,6 @@ class SupplierPage {
         console.log('addEventListeners');
         // foreach (c in this.detailsCaret)
         //     this.detailsCaret.onclick = this.renderRecordDetails;
-        this.enableFields();
 
     }
 
@@ -133,99 +136,90 @@ class SupplierPage {
                             <th scope="col">&nbsp;</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        ${this.renderRecordSummary()}
+                    <tbody id="tableBody">
+                    ${this.renderAllRecords(this.state.suppliers)}
                     </tbody>
                 </table>
             </div>
         `;
     }
-    renderRecordSummary() { 
-        console.log("renderSupplierRecord");
+
+    renderAllRecords(suppliers) {
+        console.log("renderAllRecords");
         // for each supplier, generate html
+        const suppliersHTML = suppliers.map( (supplier, index) => this.renderRecordSummary(supplier, index) ).join('');
+        return suppliersHTML;
+    }
+
+    renderRecordSummary(supplier, index) { 
+        console.log("renderRecordSummary");
         return `
-            <tr class="summary" id="summary-${this.state.selectSupplier.supplierId}">
+            <tr class="summary" data-index="${index}">
                 <th scope="row">
                     <div class="form-check">
                         <input class="form-check-input position-static select-record" type="checkbox" value="option1" aria-label="Select vendor">
                     </div>
                 </th>
-                <td>${this.state.selectSupplier.supplierId}</td>
-                <td>
-                    <input id="supplierName" name="supplierName" type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.supplier.name}">
+                <td>${supplier.supplierId}</td>
+                <td class="supplierName">
+                    <input type="text" disabled class="form-control-plaintext" value="${supplier.name}">
                 </td>
                 <td class="repName">
-                    <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.supplier.repFirst} ${this.state.selectSupplier.supplier.repLast}">
+                    <input type="text" disabled class="form-control-plaintext" value="${supplier.repFirst} ${supplier.repLast}">
                 </td>
                 <td class="repPhone">
-                    <a href="tel:${this.state.selectSupplier.supplier.repPhone}">
-                        <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.supplier.repPhone}">
+                    <a href="tel:${supplier.repPhone}">
+                        <input type="text" disabled class="form-control-plaintext" value="${supplier.repPhone}">
                     </a>
                 </td>
                 <td class="supplierPhone">
-                    <a href="tel:${this.state.selectSupplier.supplier.phone}">
-                        <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.supplier.phone}">
+                    <a href="tel:${supplier.phone}">
+                        <input type="text" disabled class="form-control-plaintext" value="${supplier.phone}">
                     </a>
                 </td>
                 <td class="supplierEmail">
-                    <a href="mailto:${this.state.selectSupplier.supplier.email}">
-                        <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.supplier.email}">
+                    <a href="mailto:${supplier.email}">
+                        <input type="text" disabled class="form-control-plaintext" value="${supplier.email}">
                     </a>
                 </td>
                 <td class="website">
-                    <a href="${this.state.selectSupplier.supplier.website}" target="_blank">
-                        <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.supplier.website}">
+                    <a href="${supplier.website}" target="_blank">
+                        <input type="text" disabled class="form-control-plaintext" value="${supplier.website}">
                     </a>
                 </td>
                 <td>
-                    <a class="details-caret" href="#details-${this.state.selectSupplier.supplierId}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="Supplier details">
+                    <a class="details-caret" href="#details-${index}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="Supplier details">
                         <i class="fa fa-caret-down"></i>
                     </a>
                 </td>
             </tr>
-            ${this.renderRecordDetails()}
+            ${this.renderRecordDetails(supplier, index)}
         `;
     }
 
-    renderRecordDetails() {
+    renderRecordDetails(supplier, index) {
         // triggered by onclick event of detailsCaret[i]
         console.log("renderRecordDetails");
+        // get all supplier addresses
+        let allAddresses = this.state.addresses;
+        let addressId = supplier.addressId;
+        let supplierAddresses = [];
+        // FL: I messed up the logic here because it puts in the addresses double when the address ID is the same but type is different.
+        for (let i = 0; i < addressId.length; i++) {
+            if (allAddresses[i].addressId == addressId[i]) {
+                supplierAddresses.push(allAddresses[i]);
+            }
+        }
+        const addressHTML = supplierAddresses.map( (address, index) => this.renderAddress(address, index) ).join('');
         return `
-            <tr class="table-nested details collapse" id="details-${this.state.selectSupplier.supplierId}">
+            <tr class="table-nested details collapse" id="details-${index}">
                 <th>&nbsp;</th>
                 <td colspan="8" class="">
                     <div class="row mb-4">
                         <div class="col-12">
                             <table class="table table-sm mb-0">
                                 <tbody>
-                                    <tr class="address">
-                                        <th scope="row" class="streetLine1">
-                                            <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.addresses[0].address.streetLine1}">
-                                        </th>
-                                        <td class="streetLine2">
-                                            <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.addresses[0].address.streetLine2}">
-                                        </td>
-                                        <td class="city">
-                                            <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.addresses[0].address.city}">
-                                        </td>
-                                        <td class="state">
-                                            <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.addresses[0].address.state}">
-                                        </td>
-                                        <td class="zipcode">
-                                            <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.addresses[0].address.zipcode}">
-                                        </td>
-                                        <td class="country">
-                                            <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.addresses[0].address.country}">
-                                        </td>
-                                    </tr>
-                                    <tr class="address-label text-muted small">
-                                        <th scope="row">${this.state.selectSupplier.addresses[0].addressType} Address Line 1</th>
-                                        <th scope="row">${this.state.selectSupplier.addresses[0].addressType} Address Line 2</th>
-                                        <td>City</td>
-                                        <td>State / Province</td>
-                                        <td>Zip-code</td>
-                                        <td>Country</td>
-                                    </tr>
+                                    ${addressHTML}
                                 </tbody>
                             </table>
                         </div>
@@ -234,7 +228,7 @@ class SupplierPage {
                         <div class="col-12">
                             <div class="form-group">
                                 <label>Notes:</label>
-                                <textarea class="form-control notes" disabled>${this.state.selectSupplier.supplier.note}</textarea>
+                                <textarea class="form-control notes" disabled>${supplier.note}</textarea>
                             </div>
                         </div>
                     </div>
@@ -247,14 +241,49 @@ class SupplierPage {
                         </div>
                         <div class="col">
                             <div class="crud-controls text-right">
-                                <button id="editBtn" class="edit btn btn-outline-dark">Edit</button>
-                                <button id="saveBtn" class="save btn btn-outline-dark">Save</button>
-                                <button id="archiveBtn" class="archive btn btn-outline-dark">Archive</button>
-                                <butto id="deleteBtn" class="delete btn btn-outline-dark">Delete</button>
+                                <button class="edit btn btn-outline-dark" data-index="${index}">Edit</button>
+                                <button class="save btn btn-outline-dark" data-index="${index}">Save</button>
+                                <button class="archive btn btn-outline-dark" data-index="${index}">Archive</button>
+                                <button class="delete btn btn-outline-dark" data-index="${index}">Delete</button>
                             </div>
                         </div>
                     </div>
                 </td>
+            </tr>
+        `;
+    }
+
+    renderAddress(address, index) {
+        console.log("renderAddress");
+        // generate html for each supplier address
+        return `
+            <tr class="address" data-index="${index}">
+                <th scope="row" class="streetLine1">
+                    <input type="text" disabled class="form-control-plaintext" value="${address.address.streetLine1}">
+                </th>
+                <td class="streetLine2" data-index="${index}">
+                    <input type="text" disabled class="form-control-plaintext" value="${address.address.streetLine2}">
+                </td>
+                <td class="city" data-index="${index}">
+                    <input type="text" disabled class="form-control-plaintext" value="${address.address.city}">
+                </td>
+                <td class="state" data-index="${index}">
+                    <input type="text" disabled class="form-control-plaintext" value="${address.address.state}">
+                </td>
+                <td class="zipcode" data-index="${index}">
+                    <input type="text" disabled class="form-control-plaintext" value="${address.address.zipcode}">
+                </td>
+                <td class="country" data-index="${index}">
+                    <input type="text" disabled class="form-control-plaintext" value="${address.address.country}">
+                </td>
+            </tr>
+            <tr class="address-label text-muted small" data-index="${index}">
+                <th scope="row">${address.addressType} Address Line 1</th>
+                <th scope="row">${address.addressType} Address Line 2</th>
+                <td>City</td>
+                <td>State / Province</td>
+                <td>Zip-code</td>
+                <td>Country</td>
             </tr>
         `;
     }
@@ -272,6 +301,7 @@ class SupplierPage {
         // swap address type int to string for DOM output
         // example: if addressType == 1, then addressType = "Billing"
     }  
+
 
     // UI INTERACTIONS
     enableFields(enabled=false) { 
