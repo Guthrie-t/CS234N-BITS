@@ -204,7 +204,6 @@ class SupplierPage {
         let allAddresses = this.state.addresses;
         let addressId = supplier.addressId;
         let supplierAddresses = [];
-        // FL: I messed up the logic here because it puts in the addresses double when the address ID is the same but type is different.
         for (let i = 0; i < addressId.length; i++) {
             if (allAddresses[i].addressId == addressId[i]) {
                 supplierAddresses.push(allAddresses[i]);
