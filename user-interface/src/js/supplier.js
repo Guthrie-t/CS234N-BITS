@@ -9,58 +9,50 @@
 
 class SupplierPage {
     constructor() {
-        // FL: I setup the state object to reflect a single Supplier at a time. 
-        //     My thought process was to insert the chosen supplier into the state 
-        //     when the Client expands the details view. It may be better to 
-        //     reconstruct the state object to hold all supplier data (or have 
-        //     a suppliers array included).
         this.state = {
-            supplierId: "",
-            supplier: null,
-            address: []
-        };
-        // FL: test includes real data from the supplier database as an example for 
-        //     setup and testing before we make api calls.
-        this.test = {
-            supplierId: 6,
-            supplier: {
-                name: "White Labs",
-                phone: "n",
-                email: "info@whitelabs.com",
-                website: "https://www.whitelabs.com/",
-                repFirst: "Kim",
-                repLast: "Derr",
-                repPhone: "858.267.7691",
-                repEmail: "kderr@whitelabs.com ",
-                note: ""
-            },
-            addresses: [
-                {
-                    addressId: 7,                // FL: When we fetch the data, if we change this value to
-                    addressType: "Billing", // 1 //     the english address type, we can use it in the string
-                    address: {                   //     literal on the DOM for underneath the Address line
-                        streetLine1: ": 9495 Candida Street",
-                        streetLine2: "",
-                        city: "San Diego",
-                        state: "CA",
-                        zipcode: "92126",
-                        country: "USA"
-                    }
+            suppliers: [], // array of all supplier objects
+            addresses: [], // array of all supplier address objects
+            selectSupplier: { // grab the chosen supplier by Id and all associated data; is this useful or an unnecessary step?
+                supplierId: 6,
+                supplier: {
+                    name: "White Labs",
+                    phone: "n",
+                    email: "info@whitelabs.com",
+                    website: "https://www.whitelabs.com/",
+                    repFirst: "Kim",
+                    repLast: "Derr",
+                    repPhone: "858.267.7691",
+                    repEmail: "kderr@whitelabs.com ",
+                    note: ""
                 },
-                {
-                    addressId: 7,
-                    addressType: "Mailing", // 2
-                    address: {
-                        streetLine1: ": 9495 Candida Street",
-                        streetLine2: "",
-                        city: "San Diego",
-                        state: "CA",
-                        zipcode: "92126",
-                        country: "USA"
+                addresses: [
+                    {
+                        addressId: 7,                // FL: When we fetch the data, if we change this value to
+                        addressType: "Billing", // 1 //     the english address type, we can use it in the string
+                        address: {                   //     literal on the DOM for underneath the Address line
+                            streetLine1: ": 9495 Candida Street",
+                            streetLine2: "",
+                            city: "San Diego",
+                            state: "CA",
+                            zipcode: "92126",
+                            country: "USA"
+                        }
+                    },
+                    {
+                        addressId: 7,
+                        addressType: "Mailing", // 2
+                        address: {
+                            streetLine1: ": 9495 Candida Street",
+                            streetLine2: "",
+                            city: "San Diego",
+                            state: "CA",
+                            zipcode: "92126",
+                            country: "USA"
+                        }
                     }
-                }
-            ]
-        };
+                ]
+            }
+        }
         // api urls
         this.server = "https://localhost:58543/api/";
         this.url = this.server + "/supplier";
@@ -73,34 +65,10 @@ class SupplierPage {
         this.bulkEdit = document.querySelector('#bulkEdit');
         this.bulkDelete = document.querySelector('#bulkDelete');
         this.bulkArchive = document.querySelector('#bulkArchive');
-        this.addSupplier = document.querySelector('#addSupplier');
+        this.addSupplierBtn = document.querySelector('#addSupplier');
         this.loadingIndicator = document.querySelector('#loadingIndicator');
         this.mainContent = document.querySelector('#mainContent');
-        this.supplierTable = document.querySelector('#supplierTable');
-        this.selectAllCheckbox = document.querySelector('#selectAllCheckbox');
-        this.selectRecord = document.querySelector('.select-record');
-        this.summary = document.querySelector('.summary');
-        this.detailsCaret = document.querySelector('.details-caret');
-        this.details = document.querySelector('.details');
-        // field elements may need to be supplierId specific 
-        this.supplierName = document.querySelector(`td.supplierName input`);
-        this.repName = document.querySelector(`td.repName input`);
-        this.repPhone = document.querySelector(`td.repPhone input`);
-        // this.supplierPhone = document.querySelector(`${this.test.supplierId} td.supplierPhone input`);
-        // this.supplierEmail = document.querySelector(`${this.test.supplierId} td.supplierEmail input`);
-        // this.website = document.querySelector(`${this.test.supplierId} td.website input`);
-        // this.streetLine1 = document.querySelector(`details-${this.test.supplierId} td.streetLine1 input`);
-        // this.streetLine2 = document.querySelector(`details-${this.test.supplierId} td.streetLine2 input`);
-        // this.city = document.querySelector(`details-${this.test.supplierId} td.city input`);
-        // this.state = document.querySelector(`details-${this.test.supplierId} td.state input`);
-        // this.zipcode = document.querySelector(`details-${this.test.supplierId} td.zipcode input`);
-        // this.country = document.querySelector(`details-${this.test.supplierId} td.country input`);
-        this.crudControls = document.getElementsByClassName('.crud-controls');
-        this.edit = document.getElementsByClassName('crud-controls.edit');
-        this.save = document.getElementsByClassName('crud-controls.save');
-        this.delete = document.getElementsByClassName('crud-controls.delete');
-        this.archive = document.getElementsByClassName('crud-controls.archive');
-        // start application
+        //start application
         console.log("loaded");
         this.bindAllMethods.bind(this);
         this.loadData();
@@ -125,15 +93,10 @@ class SupplierPage {
     }
     addEventListeners() {
         console.log('addEventListeners');
-        // FL: I was attempting to setup onclick eventListeners on the 
-        //     crud-controls links at the bottom right of the details view.
-        //     It needs to preventDefault() browser action and call the 
-        //     correct method. Perhaps it would work if it wasn't an 
-        //     anchor tag with an href attribute?
-        this.edit.onclick = this.enableFields;
-        this.save.onclick = this.updateSupplier;
-        this.delete.onclick = this.deleteSupplier;
-        this.archive.onclick = this.archiveSupplier;
+        // foreach (c in this.detailsCaret)
+        //     this.detailsCaret.onclick = this.renderRecordDetails;
+        this.enableFields();
+
     }
 
     // LOAD DATA
@@ -146,19 +109,6 @@ class SupplierPage {
         // then renderTable();
         this.renderTable(); 
     }
-
-    // GET SUPPLIER DATA
-    fetchAllSuppliers() {
-        console.log("fetchAllSuppliers");
-        // get data for every supplier in the database 
-        this.fetchSupplier();
-    }
-    fetchSupplier() { 
-        console.log("fetchSupplier");
-        // fetch single supplier
-        // swap address type int to string for DOM output
-        // example: if addressType == 1, then addressType = "Billing"
-    }  
 
     // RENDER SUPPLIER DATA
     renderTable() { 
@@ -192,42 +142,43 @@ class SupplierPage {
     }
     renderRecordSummary() { 
         console.log("renderSupplierRecord");
+        // for each supplier, generate html
         return `
-            <tr class="summary" data-id="${this.test.supplierId}">
+            <tr class="summary" id="summary-${this.state.selectSupplier.supplierId}">
                 <th scope="row">
                     <div class="form-check">
                         <input class="form-check-input position-static select-record" type="checkbox" value="option1" aria-label="Select vendor">
                     </div>
                 </th>
-                <td>${this.test.supplierId}</td>
-                <td class="supplierName">
-                    <input type="text" disabled class="form-control-plaintext" value="${this.test.supplier.name}">
+                <td>${this.state.selectSupplier.supplierId}</td>
+                <td>
+                    <input id="supplierName" name="supplierName" type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.supplier.name}">
                 </td>
                 <td class="repName">
-                    <input type="text" disabled class="form-control-plaintext" value="${this.test.supplier.repFirst} ${this.test.supplier.repLast}">
+                    <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.supplier.repFirst} ${this.state.selectSupplier.supplier.repLast}">
                 </td>
                 <td class="repPhone">
-                    <a href="tel:${this.test.supplier.repPhone}">
-                        <input type="text" disabled class="form-control-plaintext" value="${this.test.supplier.repPhone}">
+                    <a href="tel:${this.state.selectSupplier.supplier.repPhone}">
+                        <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.supplier.repPhone}">
                     </a>
                 </td>
                 <td class="supplierPhone">
-                    <a href="tel:${this.test.supplier.phone}">
-                        <input type="text" disabled class="form-control-plaintext" value="${this.test.supplier.phone}">
+                    <a href="tel:${this.state.selectSupplier.supplier.phone}">
+                        <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.supplier.phone}">
                     </a>
                 </td>
                 <td class="supplierEmail">
-                    <a href="mailto:${this.test.supplier.email}">
-                        <input type="text" disabled class="form-control-plaintext" value="${this.test.supplier.email}">
+                    <a href="mailto:${this.state.selectSupplier.supplier.email}">
+                        <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.supplier.email}">
                     </a>
                 </td>
                 <td class="website">
-                    <a href="${this.test.supplier.website}" target="_blank">
-                        <input type="text" disabled class="form-control-plaintext" value="${this.test.supplier.website}">
+                    <a href="${this.state.selectSupplier.supplier.website}" target="_blank">
+                        <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.supplier.website}">
                     </a>
                 </td>
                 <td>
-                    <a class="details-caret" href="#details-${this.test.supplierId}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="Supplier details">
+                    <a class="details-caret" href="#details-${this.state.selectSupplier.supplierId}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="Supplier details">
                         <i class="fa fa-caret-down"></i>
                     </a>
                 </td>
@@ -237,9 +188,10 @@ class SupplierPage {
     }
 
     renderRecordDetails() {
+        // triggered by onclick event of detailsCaret[i]
         console.log("renderRecordDetails");
         return `
-            <tr class="table-nested details collapse" id="details-${this.test.supplierId}">
+            <tr class="table-nested details collapse" id="details-${this.state.selectSupplier.supplierId}">
                 <th>&nbsp;</th>
                 <td colspan="8" class="">
                     <div class="row mb-4">
@@ -248,27 +200,27 @@ class SupplierPage {
                                 <tbody>
                                     <tr class="address">
                                         <th scope="row" class="streetLine1">
-                                            <input type="text" disabled class="form-control-plaintext" value="${this.test.addresses[0].address.streetLine1}">
+                                            <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.addresses[0].address.streetLine1}">
                                         </th>
                                         <td class="streetLine2">
-                                            <input type="text" disabled class="form-control-plaintext" value="${this.test.addresses[0].address.streetLine2}">
+                                            <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.addresses[0].address.streetLine2}">
                                         </td>
                                         <td class="city">
-                                            <input type="text" disabled class="form-control-plaintext" value="${this.test.addresses[0].address.city}">
+                                            <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.addresses[0].address.city}">
                                         </td>
                                         <td class="state">
-                                            <input type="text" disabled class="form-control-plaintext" value="${this.test.addresses[0].address.state}">
+                                            <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.addresses[0].address.state}">
                                         </td>
                                         <td class="zipcode">
-                                            <input type="text" disabled class="form-control-plaintext" value="${this.test.addresses[0].address.zipcode}">
+                                            <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.addresses[0].address.zipcode}">
                                         </td>
                                         <td class="country">
-                                            <input type="text" disabled class="form-control-plaintext" value="${this.test.addresses[0].address.country}">
+                                            <input type="text" disabled class="form-control-plaintext" value="${this.state.selectSupplier.addresses[0].address.country}">
                                         </td>
                                     </tr>
                                     <tr class="address-label text-muted small">
-                                        <th scope="row">${this.test.addresses[0].addressType} Address Line 1</th>
-                                        <th scope="row">${this.test.addresses[0].addressType} Address Line 2</th>
+                                        <th scope="row">${this.state.selectSupplier.addresses[0].addressType} Address Line 1</th>
+                                        <th scope="row">${this.state.selectSupplier.addresses[0].addressType} Address Line 2</th>
                                         <td>City</td>
                                         <td>State / Province</td>
                                         <td>Zip-code</td>
@@ -282,7 +234,7 @@ class SupplierPage {
                         <div class="col-12">
                             <div class="form-group">
                                 <label>Notes:</label>
-                                <textarea class="form-control notes" disabled>${this.test.supplier.note}</textarea>
+                                <textarea class="form-control notes" disabled>${this.state.selectSupplier.supplier.note}</textarea>
                             </div>
                         </div>
                     </div>
@@ -295,10 +247,10 @@ class SupplierPage {
                         </div>
                         <div class="col">
                             <div class="crud-controls text-right">
-                                <button class="edit btn btn-outline-dark">Edit</button>
-                                <button class="save btn btn-outline-dark">Save</button>
-                                <button class="archive btn btn-outline-dark">Archive</button>
-                                <button class="delete btn btn-outline-dark">Delete</button>
+                                <button id="editBtn" class="edit btn btn-outline-dark">Edit</button>
+                                <button id="saveBtn" class="save btn btn-outline-dark">Save</button>
+                                <button id="archiveBtn" class="archive btn btn-outline-dark">Archive</button>
+                                <butto id="deleteBtn" class="delete btn btn-outline-dark">Delete</button>
                             </div>
                         </div>
                     </div>
@@ -307,41 +259,48 @@ class SupplierPage {
         `;
     }
 
+
+    // GET SUPPLIER DATA
+    fetchAllSuppliers() {
+        console.log("fetchAllSuppliers");
+        // get data for every supplier in the database 
+        this.fetchSupplier();
+    }
+    fetchSupplier() { 
+        console.log("fetchSupplier");
+        // fetch single supplier
+        // swap address type int to string for DOM output
+        // example: if addressType == 1, then addressType = "Billing"
+    }  
+
     // UI INTERACTIONS
     enableFields(enabled=false) { 
-        console.log("enableFields"); 
+        // triggered by an onclick event of editBtn
         // removes disabled from input fields
-        // FL: Not sure why I can't get this to work yet either... I feel like basically 
-        //     nothing I am doing is working and I just need to go to sleep now.
-        this.supplierName.disabled = enabled;
-        this.repName.disabled = enabled;
-        this.repPhone.disabled = enabled;
-        this.supplierPhone.disabled = enabled;
-        this.supplierEmail.disabled = enabled;
-        this.website.disabled = enabled;
-        this.streetLine1.disabled = enabled;
-        this.streetLine2.disabled = enabled;
-        this.city.disabled = enabled;
-        this.state.disabled = enabled;
-        this.zipcode.disabled = enabled;
-        this.country.disabled = enabled;
+        console.log("enableFields"); 
     } 
     selectAllCheckboxes() { 
+        // triggered by checking the selectAllCheckbox
         console.log("selectAllCheckboxes"); 
-        // when this.selectAllCheckbox is checked, select all checkboxes in the table
     }
+
     
     // CRUD METHODS
-    addSupplier() { 
+    addSupplier(e) { 
+        // triggered by an onclick event of addSupplierBtn
         console.log("addSupplier"); 
+        e.preventDefault();
     }
     updateSupplier() { 
+        // triggered by an onclick event of saveBtn
         console.log("updateSupplier");
     }
     deleteSupplier() { 
+        // triggered by an onclick event of deleteBtn
         console.log("deleteSupplier");
     }
     archiveSupplier() { 
+        // triggered by an onclick event of archiveBtn
         console.log("archiveSupplier"); 
     }
 
@@ -351,5 +310,6 @@ class SupplierPage {
     // archiveBulkSuppliers() { console.log("archiveBulkSuppliers") }
 }
 
+
 // create the instance on page load
-window.onload = () => new SupplierPage();
+window.onload = () => new SupplierPage;
