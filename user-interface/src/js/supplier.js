@@ -56,8 +56,8 @@ class SupplierPage {
             ], 
         }
         // api urls
-        this.server = "https://localhost:58543/api/";
-        this.url = this.server + "/supplier";
+        this.server = "https://localhost:44308/api";
+        this.url = this.server + "/suppliers";
         // ui elements
         this.selectAlphaList = document.querySelector('#selectAlphaList');
         this.selectIngredientList = document.querySelector('#selectIngredientList');
@@ -110,7 +110,6 @@ class SupplierPage {
         // hide the loading icon before renderTable
         this.loadingIndicator.classList.add('d-none');
         // then renderTable();
-        this.renderTable(); 
     }
 
     // RENDER SUPPLIER DATA
@@ -291,9 +290,27 @@ class SupplierPage {
     // GET SUPPLIER DATA
     fetchAllSuppliers() {
         console.log("fetchAllSuppliers");
+        fetch(`${this.url}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length == 0){
+                alert("Error: Didn't find any suppliers.");
+            }
+            else {
+                this.state.suppliers = data;
+                this.renderTable();
+            }
+            
+        })
+        
+        .catch(error => {
+            alert("There's a problem retrieving supplier information!")
+        });
+        console.log("Should be here.");
+        console.log(this.state.suppliers);
         // get data for every supplier in the database 
-        this.fetchSupplier();
     }
+
     fetchSupplier() { 
         console.log("fetchSupplier");
         // fetch single supplier
