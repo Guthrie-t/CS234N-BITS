@@ -61,6 +61,31 @@ namespace bitsRESTAPI.Controllers
             return simpleSupplier;
         }
 
+        //// GET: Aapi/Suppliers/search/suppliers
+        //[HttpGet("search/supplier/suppliers")]
+        //public async Task<ActionResult<SimpleSupplier>> GetAddressesForAllSuppliers()
+        //{
+        //    //SimpleSupplier simpleSupplier = new SimpleSupplier();
+
+        //    //var supplier = await _context.Supplier.FindAsync(id);
+        //    List<Supplier> allSuppliers = _context.Supplier.ToListAsync();
+            
+        //    foreach (Supplier supplier in allSuppliers)
+        //    {
+        //        supplier.FillSupplier(_context, id);
+        //    }
+            
+
+
+        //    if (simpleSupplier == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return simpleSupplier;
+        //}
+
+
         // GET: api/Suppliers/Search/Name
         [HttpGet("search/{name}")]
         public async Task<ActionResult<Supplier>> GetSupplierByName(string name)
