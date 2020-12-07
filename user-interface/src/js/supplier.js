@@ -1,4 +1,5 @@
 /*  Brewery Inventory Tracking System — Supplier Page
+    2020 Copyright frankylee kelly, Ruslan Kalashnikov, Tiffany Guthrie.
 
     Manages the supplier database and interacts with the internally facing UI 
     for the company. It renders partial supplier content until the client 
@@ -6,14 +7,12 @@
 
     Client will be able to add, edit, delete, archive supplier data.
 */
-
 /*
-    Currently returns a single supplier with all affiliated addresses. 
+    Currently returns all suppliers with all affiliated addresses. 
     The next sprint will include: 
-        - Populating all suppliers with all affiliated addresses
-                - this would also include some housekeeping to clean up how this data presents when it is blank/null
+        - Housekeeping to clean up how data presents when it is blank/null
         - Functional search/filter options
-        - Adding, Updating, or Deleting a supplier (via existing UI buttons)
+        - Adding, Updating, or Deleting a supplier method bodies
 
 */
 
@@ -21,55 +20,54 @@ class SupplierPage {
     constructor() {
         this.state = {
             suppliers: [  // array of all supplier objects
-                {
-                    supplierId: 6,
-                    name: "White Labs",
-                    phone: "n",
-                    email: "info@whitelabs.com",
-                    website: "https://www.whitelabs.com/",
-                    repFirst: "Kim",
-                    repLast: "Derr",
-                    repPhone: "858.267.7691",
-                    repEmail: "kderr@whitelabs.com ",
-                    note: "",
-                    addresses: [
-                        {
-                            addressId: 7,                // FL: When we fetch the data, if we change this value to
-                            addressType: "Billing", // 1 //     the english address type, we can use it in the string
-                            address: {                   //     literal on the DOM for underneath the Address line
-                                streetLine1: ": 9495 Candida Street",
-                                streetLine2: "",
-                                city: "San Diego",
-                                state: "CA",
-                                zipcode: "92126",
-                                country: "USA"
-                            }
-                        },
-                        {
-                            addressId: 7,
-                            addressType: "Mailing", // 2
-                            address: {
-                                streetLine1: ": 9495 Candida Street",
-                                streetLine2: "",
-                                city: "San Diego",
-                                state: "CA",
-                                zipcode: "92126",
-                                country: "USA"
-                            }
-                        }
-                    ]
-                }
+                // {
+                //     supplierId: 6,       // hardcoded supplier object for testing
+                //     name: "White Labs",
+                //     phone: "n",
+                //     email: "info@whitelabs.com",
+                //     website: "https://www.whitelabs.com/",
+                //     repFirst: "Kim",
+                //     repLast: "Derr",
+                //     repPhone: "858.267.7691",
+                //     repEmail: "kderr@whitelabs.com ",
+                //     note: "",
+                //     addresses: [
+                //         {
+                //             addressId: 7,                // FL: When we fetch the data, if we change this value to
+                //             addressType: "Billing", // 1 //     the english address type, we can use it in the string
+                //             address: {                   //     literal on the DOM for underneath the Address line
+                //                 streetLine1: ": 9495 Candida Street",
+                //                 streetLine2: "",
+                //                 city: "San Diego",
+                //                 state: "CA",
+                //                 zipcode: "92126",
+                //                 country: "USA"
+                //             }
+                //         },
+                //         {
+                //             addressId: 7,
+                //             addressType: "Mailing", // 2
+                //             address: {
+                //                 streetLine1: ": 9495 Candida Street",
+                //                 streetLine2: "",
+                //                 city: "San Diego",
+                //                 state: "CA",
+                //                 zipcode: "92126",
+                //                 country: "USA"
+                //             }
+                //         }
+                //     ]
+                // }
             ]
         }
         // api urls
-        this.server = "https://localhost:44308/api";
+        this.server = "http://localhost:59228/api"; // T: 44308    FL: 59228
         this.url = this.server + "/suppliers";
         // ui elements
         this.selectAlphaList = document.querySelector('#selectAlphaList');
         this.selectIngredientList = document.querySelector('#selectIngredientList');
         this.searchForm = document.querySelector('#searchForm');
         this.selectView = document.querySelector('#selectView');
-        this.bulkControlSet = document.querySelector('#bulkControlSet');
         this.bulkEdit = document.querySelector('#bulkEdit');
         this.bulkDelete = document.querySelector('#bulkDelete');
         this.bulkArchive = document.querySelector('#bulkArchive');
@@ -78,22 +76,20 @@ class SupplierPage {
         this.mainContent = document.querySelector('#mainContent');
         this.supplierTable = document.querySelector('#supplierTable');
         //start application
-        console.log("loaded");
+        // console.log("loaded");
         this.bindAllMethods.bind(this);
         this.loadData();
-        this.addEventListeners();
     }
 
     // HELPER METHODS
     bindAllMethods() {
         this.addEventListeners = this.addEventListeners.bind(this);
         this.loadData = this.loadData.bind(this);
+        this.fetchSupplier = this.fetchSupplier.bind(this);
         this.renderTable = this.renderTable.bind(this);
         this.renderRecordSummary = this.renderRecordSummary.bind(this);
         this.renderRecordDetails = this.renderRecordDetails.bind(this);
         this.renderAddress = this.renderAddress.bind(this);
-        this.fetchAllSuppliers = this.fetchAllSuppliers.bind(this);
-        this.fetchSupplier = this.fetchSupplier.bind(this);
         this.enableFields = this.enableFields.bind(this);
         this.selectAllCheckboxes = this.selectAllCheckboxes.bind(this);
         this.addSupplier = this.addSupplier.bind(this);
@@ -102,27 +98,61 @@ class SupplierPage {
         this.archiveSupplier = this.archiveSupplier.bind(this);
     }
     addEventListeners() {
-        console.log('addEventListeners');
-        // foreach (c in this.detailsCaret)
-        //     this.detailsCaret.onclick = this.renderRecordDetails;
-
+        // console.log('addEventListeners');
+        this.bulkEdit.onclick = this.enableFields;
+        this.bulkDelete.onclick = this.deleteSupplier;
+        this.bulkArchive.onclick = this.archiveSupplier;
+        this.addSupplierBtn.onclick = this.addSupplier;
+        // add onclick events for each set of supplier crud-options
+        for (let i = 0; i < this.state.suppliers.length; i++) {
+            document.querySelector(`.edit[data-index="${i}"]`).onclick = this.enableFields;
+            document.querySelector(`.save[data-index="${i}"]`).onclick = this.updateSupplier;
+            document.querySelector(`.archive[data-index="${i}"]`).onclick = this.archiveSupplier;
+            document.querySelector(`.delete[data-index="${i}"]`).onclick = this.deleteSupplier;
+        }
     }
 
-    // LOAD DATA
+    // GET SUPPLIER DATA
     loadData() {
-        console.log("loadData");
-        // fetch each record in the supplier db
-        //this.fetchAllSuppliers();
-        this.fetchSupplier();
-        // hide the loading icon before renderTable
-        this.loadingIndicator.classList.add('d-none');
-        // then render table
-        // this.renderTable();
+        // console.log("loadData");
+        fetch(`${this.url}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length == 0)
+                alert("Error: Didn't find any suppliers.");
+            else 
+                // get data for every supplier in the database 
+                for (let i = 0; i < data.length; i++) 
+                    this.fetchSupplier(data[i].supplierId);
+        })
+        .catch(error => {
+            alert("There's a problem retrieving supplier information!")
+        });
     }
+    fetchSupplier(id) { 
+        // console.log("fetchSupplier");
+        fetch(`${this.url}/search/supplier/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            this.state.suppliers.push(data);
+        })
+        .then( () => {
+            // hide the loading icon
+            this.loadingIndicator.classList.add('d-none');
+            // then render table 
+            this.renderTable();
+            // listeners must be added after final render
+            this.addEventListeners();
+        })
+        .catch(error => {
+            alert("There's a problem retrieving supplier information! (2)")
+        });
+    }  
+
 
     // RENDER SUPPLIER DATA
     renderTable() { 
-        console.log("renderTable");
+        // console.log("renderTable");
         this.mainContent.innerHTML = `
             <div id="supplierTable" class="table-responsive">
                 <table class="table mb-0">
@@ -133,10 +163,11 @@ class SupplierPage {
                                     <input id="selectAllCheckbox" class="form-check-input position-static" type="checkbox" value="" aria-label="Select all vendor records">
                                 </div>
                             </th>
-                            <th scope="col">#</th>
+                       <!-- <th scope="col">#</th> -->
                             <th scope="col">Vendor</th>
                             <th scope="col">Primary Contact</th>
-                            <th scope="col">Phone</th>
+                            <th scope="col">Contact Phone</th>
+                            <th scope="col">Contact Email</th>
                             <th scope="col">Office</th>
                             <th scope="col">Email</th>
                             <th scope="col">Website</th>
@@ -150,16 +181,14 @@ class SupplierPage {
             </div>
         `;
     }
-
     renderAllRecords(suppliers) {
-        console.log("renderAllRecords");
+        // console.log("renderAllRecords");
         // for each supplier, generate html
         const suppliersHTML = suppliers.map( (supplier, index) => this.renderRecordSummary(supplier, index) ).join('');
         return suppliersHTML;
     }
-
     renderRecordSummary(supplier, index) { 
-        console.log("renderRecordSummary");
+        // console.log("renderRecordSummary");
         return `
             <tr class="summary" data-index="${index}">
                 <th scope="row">
@@ -167,7 +196,7 @@ class SupplierPage {
                         <input class="form-check-input position-static select-record" type="checkbox" value="option1" aria-label="Select vendor">
                     </div>
                 </th>
-                <td>${supplier.supplierId}</td>
+           <!-- <td>${supplier.supplierId}</td> -->
                 <td class="supplierName">
                     <input type="text" disabled class="form-control-plaintext" value="${supplier.name}">
                 </td>
@@ -179,14 +208,19 @@ class SupplierPage {
                         <input type="text" disabled class="form-control-plaintext" value="${supplier.contactPhone}">
                     </a>
                 </td>
+                <td class="repEmail">
+                    <a href="mailto:${supplier.contactEmail}">
+                        <input type="text" disabled class="form-control-plaintext" value="${supplier.contactEmail}">
+                    </a>
+                </td>
                 <td class="supplierPhone">
                     <a href="tel:${supplier.phone}">
                         <input type="text" disabled class="form-control-plaintext" value="${supplier.phone}">
                     </a>
                 </td>
                 <td class="supplierEmail">
-                    <a href="mailto:${supplier.contactEmail}">
-                        <input type="text" disabled class="form-control-plaintext" value="${supplier.contactEmail}">
+                    <a href="mailto:${supplier.email}">
+                        <input type="text" disabled class="form-control-plaintext" value="${supplier.email}">
                     </a>
                 </td>
                 <td class="website">
@@ -203,10 +237,8 @@ class SupplierPage {
             ${this.renderRecordDetails(supplier, index)}
         `;
     }
-
     renderRecordDetails(supplier, index) {
-        // triggered by onclick event of detailsCaret[i]
-        console.log("renderRecordDetails");
+        // console.log("renderRecordDetails");
         // render all supplier addresses
         const addressHTML = supplier.addresses.map( (address, index) => this.renderAddress(address, index) ).join('');
         return `
@@ -252,7 +284,7 @@ class SupplierPage {
     }
 
     renderAddress(address, index) {
-        console.log("renderAddress");
+        // console.log("renderAddress");
         // generate html for each supplier address
         return `
             <tr class="address" data-index="${index}">
@@ -271,9 +303,9 @@ class SupplierPage {
                 <td class="zipcode" data-index="${index}">
                     <input type="text" disabled class="form-control-plaintext" value="${address.zipcode}">
                 </td>
-                <td class="country" data-index="${index}">
+            <!--<td class="country" data-index="${index}">
                     <input type="text" disabled class="form-control-plaintext" value="${address.zipcode}">
-                </td>
+                </td> -->
             </tr>
             <tr class="address-label text-muted small" data-index="${index}">
                 <th scope="row">${address.typeName} Address Line 1</th>
@@ -281,58 +313,10 @@ class SupplierPage {
                 <td>City</td>
                 <td>State / Province</td>
                 <td>Zip-code</td>
-                <td>Country</td>
+           <!-- <td>Country</td> -->
             </tr>
         `;
     }
-
-
-    // GET SUPPLIER DATA
-    fetchAllSuppliers() {
-        console.log("fetchAllSuppliers");
-        fetch(`${this.url}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length == 0){
-                alert("Error: Didn't find any suppliers.");
-            }
-            else {
-                this.state.suppliers = data;
-                this.renderTable();
-            }
-            
-        })
-        .catch(error => {
-            alert("There's a problem retrieving supplier information!")
-        });
-        console.log("Should be here.");
-        console.log(this.state.suppliers);
-        // get data for every supplier in the database 
-    }
-
-
-    //Fetching single supplier is finished -- need to add a way to get this info for all suppliers --TG
-    fetchSupplier() { 
-        console.log("fetchSupplier");
-        fetch(`${this.url}/search/supplier/6`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length == 0){
-                alert("Error: Didn't find any suppliers.");
-            }
-            else {
-                this.state.suppliers[0] = data;
-                this.renderTable();
-            }
-            
-        })
-        .catch(error => {
-            alert("There's a problem retrieving supplier information!")
-        });
-        // fetch single supplier
-        // swap address type int to string for DOM output
-        // example: if addressType == 1, then addressType = "Billing"
-    }  
 
 
     // UI INTERACTIONS
@@ -348,10 +332,9 @@ class SupplierPage {
 
     
     // CRUD METHODS
-    addSupplier(e) { 
+    addSupplier() { 
         // triggered by an onclick event of addSupplierBtn
         console.log("addSupplier"); 
-        e.preventDefault();
     }
     updateSupplier() { 
         // triggered by an onclick event of saveBtn
@@ -361,7 +344,7 @@ class SupplierPage {
         // triggered by an onclick event of deleteBtn
         console.log("deleteSupplier");
     }
-    archiveSupplier() { 
+    archiveSupplier(id) { 
         // triggered by an onclick event of archiveBtn
         console.log("archiveSupplier"); 
     }
