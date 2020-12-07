@@ -7,6 +7,16 @@
     Client will be able to add, edit, delete, archive supplier data.
 */
 
+/*
+    Currently returns a single supplier with all affiliated addresses. 
+    The next sprint will include: 
+        - Populating all suppliers with all affiliated addresses
+                - this would also include some housekeeping to clean up how this data presents when it is blank/null
+        - Functional search/filter options
+        - Adding, Updating, or Deleting a supplier (via existing UI buttons)
+
+*/
+
 class SupplierPage {
     constructor() {
         this.state = {
