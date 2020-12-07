@@ -22,38 +22,34 @@ class SupplierPage {
                     repPhone: "858.267.7691",
                     repEmail: "kderr@whitelabs.com ",
                     note: "",
-                    addressId: [
-                        7,
-                        7
+                    addresses: [
+                        {
+                            addressId: 7,                // FL: When we fetch the data, if we change this value to
+                            addressType: "Billing", // 1 //     the english address type, we can use it in the string
+                            address: {                   //     literal on the DOM for underneath the Address line
+                                streetLine1: ": 9495 Candida Street",
+                                streetLine2: "",
+                                city: "San Diego",
+                                state: "CA",
+                                zipcode: "92126",
+                                country: "USA"
+                            }
+                        },
+                        {
+                            addressId: 7,
+                            addressType: "Mailing", // 2
+                            address: {
+                                streetLine1: ": 9495 Candida Street",
+                                streetLine2: "",
+                                city: "San Diego",
+                                state: "CA",
+                                zipcode: "92126",
+                                country: "USA"
+                            }
+                        }
                     ]
                 }
-            ],
-            addresses: [  // array of all supplier address objects
-                {
-                    addressId: 7,                // FL: When we fetch the data, if we change this value to
-                    addressType: "Billing", // 1 //     the english address type, we can use it in the string
-                    address: {                   //     literal on the DOM for underneath the Address line
-                        streetLine1: ": 9495 Candida Street",
-                        streetLine2: "",
-                        city: "San Diego",
-                        state: "CA",
-                        zipcode: "92126",
-                        country: "USA"
-                    }
-                },
-                {
-                    addressId: 7,
-                    addressType: "Mailing", // 2
-                    address: {
-                        streetLine1: ": 9495 Candida Street",
-                        streetLine2: "",
-                        city: "San Diego",
-                        state: "CA",
-                        zipcode: "92126",
-                        country: "USA"
-                    }
-                }
-            ], 
+            ]
         }
         // api urls
         this.server = "https://localhost:44308/api";
@@ -109,7 +105,8 @@ class SupplierPage {
         this.fetchAllSuppliers();
         // hide the loading icon before renderTable
         this.loadingIndicator.classList.add('d-none');
-        // then renderTable();
+        // then render table
+        // this.renderTable();
     }
 
     // RENDER SUPPLIER DATA
@@ -199,16 +196,8 @@ class SupplierPage {
     renderRecordDetails(supplier, index) {
         // triggered by onclick event of detailsCaret[i]
         console.log("renderRecordDetails");
-        // get all supplier addresses
-        let allAddresses = this.state.addresses;
-        let addressId = supplier.addressId;
-        let supplierAddresses = [];
-        for (let i = 0; i < addressId.length; i++) {
-            if (allAddresses[i].addressId == addressId[i]) {
-                supplierAddresses.push(allAddresses[i]);
-            }
-        }
-        const addressHTML = supplierAddresses.map( (address, index) => this.renderAddress(address, index) ).join('');
+        // render all supplier addresses
+        const addressHTML = supplier.addresses.map( (address, index) => this.renderAddress(address, index) ).join('');
         return `
             <tr class="table-nested details collapse" id="details-${index}">
                 <th>&nbsp;</th>
@@ -302,7 +291,6 @@ class SupplierPage {
             }
             
         })
-        
         .catch(error => {
             alert("There's a problem retrieving supplier information!")
         });
