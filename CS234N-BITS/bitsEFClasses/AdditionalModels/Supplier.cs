@@ -27,6 +27,8 @@ namespace bitsEFClasses.AdditionalModels
         public string ContactLastName { get; set; }
         public string ContactPhone { get; set; }
         public string ContactEmail { get; set; }
+
+        public string Website { get; set; }
         public string Note { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<AddressType> AddressTypes { get; set; }
@@ -42,6 +44,7 @@ namespace bitsEFClasses.AdditionalModels
             ContactLastName = s.ContactLastName;
             ContactPhone = s.ContactPhone;
             Note = s.Note;
+            Website = s.Website;
 
             foreach (SupplierAddress sAddress in s.SupplierAddress)
             {

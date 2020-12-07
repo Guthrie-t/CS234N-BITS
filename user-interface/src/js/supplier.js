@@ -102,7 +102,8 @@ class SupplierPage {
     loadData() {
         console.log("loadData");
         // fetch each record in the supplier db
-        this.fetchAllSuppliers();
+        //this.fetchAllSuppliers();
+        this.fetchSupplier();
         // hide the loading icon before renderTable
         this.loadingIndicator.classList.add('d-none');
         // then render table
@@ -161,11 +162,11 @@ class SupplierPage {
                     <input type="text" disabled class="form-control-plaintext" value="${supplier.name}">
                 </td>
                 <td class="repName">
-                    <input type="text" disabled class="form-control-plaintext" value="${supplier.repFirst} ${supplier.repLast}">
+                    <input type="text" disabled class="form-control-plaintext" value="${supplier.contactFirstName} ${supplier.contactLastName}">
                 </td>
                 <td class="repPhone">
-                    <a href="tel:${supplier.repPhone}">
-                        <input type="text" disabled class="form-control-plaintext" value="${supplier.repPhone}">
+                    <a href="tel:${supplier.contactPhone}">
+                        <input type="text" disabled class="form-control-plaintext" value="${supplier.contactPhone}">
                     </a>
                 </td>
                 <td class="supplierPhone">
@@ -174,8 +175,8 @@ class SupplierPage {
                     </a>
                 </td>
                 <td class="supplierEmail">
-                    <a href="mailto:${supplier.email}">
-                        <input type="text" disabled class="form-control-plaintext" value="${supplier.email}">
+                    <a href="mailto:${supplier.contactEmail}">
+                        <input type="text" disabled class="form-control-plaintext" value="${supplier.contactEmail}">
                     </a>
                 </td>
                 <td class="website">
@@ -246,27 +247,27 @@ class SupplierPage {
         return `
             <tr class="address" data-index="${index}">
                 <th scope="row" class="streetLine1">
-                    <input type="text" disabled class="form-control-plaintext" value="${address.address.streetLine1}">
+                    <input type="text" disabled class="form-control-plaintext" value="${address.streetLine1}">
                 </th>
                 <td class="streetLine2" data-index="${index}">
-                    <input type="text" disabled class="form-control-plaintext" value="${address.address.streetLine2}">
+                    <input type="text" disabled class="form-control-plaintext" value="${address.streetLine2}">
                 </td>
                 <td class="city" data-index="${index}">
-                    <input type="text" disabled class="form-control-plaintext" value="${address.address.city}">
+                    <input type="text" disabled class="form-control-plaintext" value="${address.city}">
                 </td>
                 <td class="state" data-index="${index}">
-                    <input type="text" disabled class="form-control-plaintext" value="${address.address.state}">
+                    <input type="text" disabled class="form-control-plaintext" value="${address.state}">
                 </td>
                 <td class="zipcode" data-index="${index}">
-                    <input type="text" disabled class="form-control-plaintext" value="${address.address.zipcode}">
+                    <input type="text" disabled class="form-control-plaintext" value="${address.zipcode}">
                 </td>
                 <td class="country" data-index="${index}">
-                    <input type="text" disabled class="form-control-plaintext" value="${address.address.country}">
+                    <input type="text" disabled class="form-control-plaintext" value="${address.zipcode}">
                 </td>
             </tr>
             <tr class="address-label text-muted small" data-index="${index}">
-                <th scope="row">${address.addressType} Address Line 1</th>
-                <th scope="row">${address.addressType} Address Line 2</th>
+                <th scope="row">${address.typeName} Address Line 1</th>
+                <th scope="row">${address.typeName} Address Line 2</th>
                 <td>City</td>
                 <td>State / Province</td>
                 <td>Zip-code</td>
@@ -299,8 +300,25 @@ class SupplierPage {
         // get data for every supplier in the database 
     }
 
+
+    //Fetching single supplier is finished -- need to add a way to get this info for all suppliers --TG
     fetchSupplier() { 
         console.log("fetchSupplier");
+        fetch(`${this.url}/search/supplier/6`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length == 0){
+                alert("Error: Didn't find any suppliers.");
+            }
+            else {
+                this.state.suppliers[0] = data;
+                this.renderTable();
+            }
+            
+        })
+        .catch(error => {
+            alert("There's a problem retrieving supplier information!")
+        });
         // fetch single supplier
         // swap address type int to string for DOM output
         // example: if addressType == 1, then addressType = "Billing"
